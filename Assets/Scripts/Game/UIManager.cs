@@ -4,10 +4,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
-    private Image
-        bullet1Icon,
-        bullet2Icon,
-        bullet3Icon;
+    private Image[] bulletIcons;
 
     [SerializeField]
     private Text
@@ -18,6 +15,9 @@ public class UIManager : MonoBehaviour
     private PlayerController playerController;
 
     [SerializeField]
+    private GameController gameController;
+
+    [SerializeField]
     private GameObject gameOverPanel;
 
     public void RestartLevel()
@@ -26,19 +26,21 @@ public class UIManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    private System.Collections.IEnumerator Start()
+    private void Start()
     {
         if (playerController == null)
         {
             Debug.LogError("Can't initialize without player");
+            enabled = false;
+            scoreLabel.text = "Invalid";
+            timeLabel.text = "99:99:99";
         }
         else
         {
             gameOverPanel?.SetActive(false);
+            enabled = true;
+            EnableIcon(0);
         }
-
-        yield return null;
-        enabled = true;
     }
 
     // Update is called once per frame
@@ -51,7 +53,7 @@ public class UIManager : MonoBehaviour
 
         if (timeLabel != null)
         {
-            float currentTime = playerController.RemainingPlayTime;
+            float currentTime = gameController.RemainingPlayTime + 1;
             timeLabel.text = System.TimeSpan.FromSeconds(currentTime).ToString(@"mm\:ss");
 
             if (currentTime <= 1F)
@@ -62,26 +64,26 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void ToggleImageVisual(int iconIndex)
+    private void EnableIcon(int iconIndex)
     {
         switch (iconIndex)
         {
             case 1:
-                ToggleUIControl(bullet2Icon, true);
-                ToggleUIControl(bullet1Icon, false);
-                ToggleUIControl(bullet3Icon, false);
+                ToggleUIControl(bulletIcons[0], true);
+                ToggleUIControl(bulletIcons[1], false);
+                ToggleUIControl(bulletIcons[2], false);
                 break;
 
             case 2:
-                ToggleUIControl(bullet3Icon, true);
-                ToggleUIControl(bullet1Icon, false);
-                ToggleUIControl(bullet2Icon, false);
+                ToggleUIControl(bulletIcons[1], true);
+                ToggleUIControl(bulletIcons[0], false);
+                ToggleUIControl(bulletIcons[2], false);
                 break;
 
             default:
-                ToggleUIControl(bullet1Icon, true);
-                ToggleUIControl(bullet2Icon, false);
-                ToggleUIControl(bullet3Icon, false);
+                ToggleUIControl(bulletIcons[2], true);
+                ToggleUIControl(bulletIcons[0], false);
+                ToggleUIControl(bulletIcons[1], false);
 
                 break;
         }
