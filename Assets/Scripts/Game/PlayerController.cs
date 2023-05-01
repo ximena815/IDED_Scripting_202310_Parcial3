@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Player player = new Player();
-
     [Header("Movement params")]
     [SerializeField]
     [Range(20F, 50F)]
@@ -30,14 +28,31 @@ public class PlayerController : MonoBehaviour
         validXPos;
 
     private Vector2 moveDirection;
+    public static PlayerController Instance { get; private set; }
 
-    public string PlayerScore { get => player?.Score.ToString(); }
+    public uint Score { get; private set; }
+
+    public void UpdateScore(int scoreAdd) =>
+        Score += (uint)System.Math.Abs(scoreAdd);
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
         float playerWidth = GetComponent<Collider>().bounds.size.x;
 
-        maxXPos = GameUtils.GetScreenDimensions().GetUseableScreenWidth(GameUtils.SCREEN_WIDTH_PERCENT) - playerWidth;
+        maxXPos = GameUtils.GetScreenDimensions()
+            .GetUseableScreenWidth(GameUtils.SCREEN_WIDTH_PERCENT) - playerWidth;
         minXPos = -maxXPos + playerWidth;
 
         defaultYPos = transform.position.y;
@@ -47,7 +62,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         hVal = Input.GetAxis("Horizontal");
-        Vector2 moveDirection = (new Vector2(hVal, 0).normalized) * speed * Time.deltaTime;
+        moveDirection = (new Vector2(hVal, 0).normalized) * speed * Time.deltaTime;
         validXPos = Mathf.Clamp(transform.position.x + moveDirection.x, minXPos, maxXPos);
 
         transform.position = new Vector3(validXPos, defaultYPos, 0F);
@@ -67,7 +82,8 @@ public class PlayerController : MonoBehaviour
 
             if (spawnPos != null)
             {
-                Instantiate(selectedBullet, spawnPos.position, spawnPos.rotation).AddForce(transform.forward * shootForce, ForceMode.Force);
+                Instantiate(selectedBullet, spawnPos.position, spawnPos.rotation)
+                    .AddForce(transform.forward * shootForce, ForceMode.Force);
             }
         }
 

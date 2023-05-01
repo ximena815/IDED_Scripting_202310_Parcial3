@@ -7,6 +7,11 @@ public class GameController : MonoBehaviour
 
     public float RemainingPlayTime { get; private set; }
 
+    public void UpdateScore(int scoreAdd)
+    {
+        PlayerController.Instance.UpdateScore(scoreAdd);
+    }
+
     private void Start()
     {
         RemainingPlayTime = playTime;

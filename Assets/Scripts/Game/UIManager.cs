@@ -49,7 +49,7 @@ public class UIManager : MonoBehaviour
     {
         if (scoreLabel != null)
         {
-            scoreLabel.text = playerController.PlayerScore;
+            scoreLabel.text = playerController.Score.ToString();
         }
 
         if (timeLabel != null)
