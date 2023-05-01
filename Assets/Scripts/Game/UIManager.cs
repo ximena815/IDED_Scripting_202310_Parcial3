@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -22,7 +23,7 @@ public class UIManager : MonoBehaviour
 
     public void RestartLevel()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0, UnityEngine.SceneManagement.LoadSceneMode.Single);
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
 
     // Start is called before the first frame update
@@ -54,7 +55,7 @@ public class UIManager : MonoBehaviour
         if (timeLabel != null)
         {
             float currentTime = gameController.RemainingPlayTime + 1;
-            timeLabel.text = System.TimeSpan.FromSeconds(currentTime).ToString(@"mm\:ss");
+            timeLabel.text = currentTime.ToTimeFormatString();
 
             if (currentTime <= 1F)
             {

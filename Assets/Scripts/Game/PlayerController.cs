@@ -22,28 +22,47 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody selectedBullet;
 
-    private float hVal = 0F;
+    private float
+        hVal = 0F,
+        minXPos,
+        maxXPos,
+        defaultYPos,
+        validXPos;
+
+    private Vector2 moveDirection;
+
     public string PlayerScore { get => player?.Score.ToString(); }
 
-    // Start is called before the first frame update
+    private void Start()
+    {
+        float playerWidth = GetComponent<Collider>().bounds.size.x;
+
+        maxXPos = GameUtils.GetScreenDimensions().GetUseableScreenWidth(GameUtils.SCREEN_WIDTH_PERCENT) - playerWidth;
+        minXPos = -maxXPos + playerWidth;
+
+        defaultYPos = transform.position.y;
+    }
 
     // Update is called once per frame
     private void Update()
     {
         hVal = Input.GetAxis("Horizontal");
-        transform.Translate(transform.right * hVal * speed * Time.deltaTime);
+        Vector2 moveDirection = (new Vector2(hVal, 0).normalized) * speed * Time.deltaTime;
+        validXPos = Mathf.Clamp(transform.position.x + moveDirection.x, minXPos, maxXPos);
+
+        transform.position = new Vector3(validXPos, defaultYPos, 0F);
 
         ProcessShooting();
     }
 
     private void ProcessShooting()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("Fire1"))
         {
             //Fire
             if (selectedBullet == null)
             {
-                SelectBullet();
+                SelectBullet(0);
             }
 
             if (spawnPos != null)
@@ -54,25 +73,22 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            //Switch to bullet 1
-            SelectBullet();
+            SelectBullet(0);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            //Switch to bullet 2
             SelectBullet(1);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            //Switch to bullet 3
             SelectBullet(2);
         }
     }
 
-    private void SelectBullet(int index = 0)
+    private void SelectBullet(int index)
     {
-        selectedBullet = bulletPrefabs[Mathf.Clamp(index, 0, 2)];
+        selectedBullet = bulletPrefabs[GameUtils.GetClampedValue(index, bulletPrefabs.Length)];
     }
 }
