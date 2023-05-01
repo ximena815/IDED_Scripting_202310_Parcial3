@@ -82,8 +82,7 @@ public class PlayerController : MonoBehaviour
 
             if (spawnPos != null)
             {
-                Instantiate(selectedBullet, spawnPos.position, spawnPos.rotation)
-                    .AddForce(transform.forward * shootForce, ForceMode.Force);
+                Shoot();
             }
         }
 
@@ -103,7 +102,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void SelectBullet(int index)
+    protected virtual void Shoot()
+    {
+        Instantiate(selectedBullet, spawnPos.position, spawnPos.rotation)
+                            .AddForce(transform.forward * shootForce, ForceMode.Force);
+    }
+
+    protected virtual void SelectBullet(int index)
     {
         selectedBullet = bulletPrefabs[GameUtils.GetClampedValue(index, bulletPrefabs.Length)];
     }
