@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IFactory
+public interface IPool
 {
     public GameObject RetrieveInstance();
 

@@ -17,6 +17,6 @@ public class Obstacle : ObstacleBase
 
     protected override void NotifyObstacleDestroyed()
     {
-        GameController?.OnObstacleDestroyed(HP);
+        GameController?.SendMessage("OnObstacleDestroyed", HP);
     }
 }

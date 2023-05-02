@@ -2,6 +2,9 @@ using UnityEngine;
 
 public sealed class PlayerController : PlayerControllerBase
 {
+    [SerializeField]
+    private UIManager uiManager;
+
     protected override void Shoot()
     {
         Instantiate(selectedBullet, spawnPos.position, spawnPos.rotation)
@@ -11,5 +14,6 @@ public sealed class PlayerController : PlayerControllerBase
     protected override void SelectBullet(int index)
     {
         selectedBullet = bulletPrefabs[GameUtils.GetClampedValue(index, bulletPrefabs.Length)];
+        uiManager.SendMessage("EnableIcon", index);
     }
 }

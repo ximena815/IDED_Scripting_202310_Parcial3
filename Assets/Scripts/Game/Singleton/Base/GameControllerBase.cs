@@ -12,24 +12,16 @@ public abstract class GameControllerBase : MonoBehaviour
 
     protected abstract ObstacleSpawner Spawner { get; }
 
-    //public abstract void OnObstacleDestroyed(int hp);
+    protected abstract void OnScoreChanged(int scoreAdd);
 
-    public abstract void OnScoreChanged();
-
-    public void OnObstacleDestroyed(int hp)
+    private void OnObstacleDestroyed(int hp)
     {
-        UpdateScore(hp);
-        OnScoreChanged();
+        OnScoreChanged(hp);
     }
 
     protected virtual void SetGameOver()
     {
         enabled = false;
-    }
-
-    protected void UpdateScore(int scoreAdd)
-    {
-        PlayerController?.UpdateScore(scoreAdd);
     }
 
     private void Start()
@@ -50,7 +42,6 @@ public abstract class GameControllerBase : MonoBehaviour
         if (RemainingPlayTime <= 0F)
         {
             RemainingPlayTime = 0F;
-
             SetGameOver();
         }
     }

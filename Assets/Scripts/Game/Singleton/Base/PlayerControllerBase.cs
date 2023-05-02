@@ -31,17 +31,17 @@ public abstract class PlayerControllerBase : MonoBehaviour
 
     public uint Score { get; protected set; }
 
-    public void UpdateScore(int scoreAdd) =>
-        Score += (uint)System.Math.Abs(scoreAdd);
-
-    public void OnGameOver()
-    {
-        enabled = false;
-    }
-
     protected abstract void Shoot();
 
     protected abstract void SelectBullet(int index);
+
+    protected void UpdateScore(int scoreAdd) =>
+        Score += (uint)System.Math.Abs(scoreAdd);
+
+    protected void OnGameOver()
+    {
+        enabled = false;
+    }
 
     private void Start()
     {

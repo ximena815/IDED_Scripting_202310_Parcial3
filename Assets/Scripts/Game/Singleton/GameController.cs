@@ -17,16 +17,17 @@ public sealed class GameController : GameControllerBase
 
     protected override ObstacleSpawner Spawner => obstacleSpawner;
 
-    public override void OnScoreChanged()
+    protected override void OnScoreChanged(int scoreAdd)
     {
-        UiManager?.UpdateScoreLabel();
+        PlayerController?.SendMessage("UpdateScore", scoreAdd);
+        UiManager?.SendMessage("UpdateScoreLabel");
     }
 
     protected override void SetGameOver()
     {
-        UiManager?.OnGameOver();
-        PlayerController?.OnGameOver();
-        Spawner?.OnGameOver();
+        UiManager?.SendMessage("OnGameOver");
+        PlayerController?.SendMessage("OnGameOver");
+        Spawner?.SendMessage("OnGameOver");
         base.SetGameOver();
     }
 }

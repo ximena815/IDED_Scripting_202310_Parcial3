@@ -18,23 +18,23 @@ public abstract class UIManagerBase : MonoBehaviour
     protected abstract PlayerControllerBase PlayerController { get; }
     protected abstract GameControllerBase GameController { get; }
 
-    public void OnGameOver()
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
+    }
+
+    protected void OnGameOver()
     {
         enabled = false;
         gameOverPanel?.SetActive(true);
     }
 
-    public void UpdateScoreLabel()
+    protected void UpdateScoreLabel()
     {
         if (scoreLabel != null)
         {
             scoreLabel.text = PlayerController?.Score.ToString();
         }
-    }
-
-    public void RestartLevel()
-    {
-        SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
 
     // Start is called before the first frame update
@@ -49,11 +49,12 @@ public abstract class UIManagerBase : MonoBehaviour
         }
         else
         {
-            gameOverPanel?.SetActive(false);
             UpdateScoreLabel();
-            enabled = true;
-            EnableIcon(0);
         }
+
+        gameOverPanel?.SetActive(false);
+        enabled = true;
+        EnableIcon(0);
     }
 
     // Update is called once per frame
@@ -71,22 +72,22 @@ public abstract class UIManagerBase : MonoBehaviour
         switch (iconIndex)
         {
             case 1:
-                ToggleUIControl(bulletIcons[0], true);
-                ToggleUIControl(bulletIcons[1], false);
-                ToggleUIControl(bulletIcons[2], false);
-                break;
 
-            case 2:
                 ToggleUIControl(bulletIcons[1], true);
                 ToggleUIControl(bulletIcons[0], false);
                 ToggleUIControl(bulletIcons[2], false);
                 break;
 
-            default:
+            case 2:
                 ToggleUIControl(bulletIcons[2], true);
                 ToggleUIControl(bulletIcons[0], false);
                 ToggleUIControl(bulletIcons[1], false);
+                break;
 
+            default:
+                ToggleUIControl(bulletIcons[0], true);
+                ToggleUIControl(bulletIcons[1], false);
+                ToggleUIControl(bulletIcons[2], false);
                 break;
         }
     }
