@@ -1,38 +1,26 @@
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+public sealed class GameController : GameControllerBase
 {
     [SerializeField]
-    private float playTime = 60F;
+    private UIManager uiManager;
 
-    public float RemainingPlayTime { get; private set; }
+    [SerializeField]
+    private PlayerController playerController;
 
-    public void UpdateScore(int scoreAdd)
+    protected override PlayerControllerBase PlayerController => playerController;
+
+    protected override UIManagerBase UiManager => UiManager;
+
+    public override void UpdateScore(int scoreAdd)
     {
-        PlayerController.Instance.UpdateScore(scoreAdd);
+        PlayerController?.UpdateScore(scoreAdd);
     }
 
-    private void Start()
+    protected override void SetGameOver()
     {
-        RemainingPlayTime = playTime;
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        UpdateTime();
-    }
-
-    private void UpdateTime()
-    {
-        RemainingPlayTime -= Time.deltaTime;
-
-        if (RemainingPlayTime <= 0F)
-        {
-            RemainingPlayTime = 0F;
-
-            // Game over stuff
-            enabled = false;
-        }
+        UiManager?.OnGameOver();
+        PlayerController?.OnGameOver();
+        base.SetGameOver();
     }
 }
