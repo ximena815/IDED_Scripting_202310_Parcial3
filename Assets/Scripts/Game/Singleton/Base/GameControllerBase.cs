@@ -10,11 +10,26 @@ public abstract class GameControllerBase : MonoBehaviour
     protected abstract PlayerControllerBase PlayerController { get; }
     protected abstract UIManagerBase UiManager { get; }
 
-    public abstract void UpdateScore(int scoreAdd);
+    protected abstract ObstacleSpawner Spawner { get; }
+
+    //public abstract void OnObstacleDestroyed(int hp);
+
+    public abstract void OnScoreChanged();
+
+    public void OnObstacleDestroyed(int hp)
+    {
+        UpdateScore(hp);
+        OnScoreChanged();
+    }
 
     protected virtual void SetGameOver()
     {
         enabled = false;
+    }
+
+    protected void UpdateScore(int scoreAdd)
+    {
+        PlayerController?.UpdateScore(scoreAdd);
     }
 
     private void Start()

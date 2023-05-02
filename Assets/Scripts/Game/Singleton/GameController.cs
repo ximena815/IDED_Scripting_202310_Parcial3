@@ -8,19 +8,25 @@ public sealed class GameController : GameControllerBase
     [SerializeField]
     private PlayerController playerController;
 
+    [SerializeField]
+    private ObstacleSpawner obstacleSpawner;
+
     protected override PlayerControllerBase PlayerController => playerController;
 
-    protected override UIManagerBase UiManager => UiManager;
+    protected override UIManagerBase UiManager => uiManager;
 
-    public override void UpdateScore(int scoreAdd)
+    protected override ObstacleSpawner Spawner => obstacleSpawner;
+
+    public override void OnScoreChanged()
     {
-        PlayerController?.UpdateScore(scoreAdd);
+        UiManager?.UpdateScoreLabel();
     }
 
     protected override void SetGameOver()
     {
         UiManager?.OnGameOver();
         PlayerController?.OnGameOver();
+        Spawner?.OnGameOver();
         base.SetGameOver();
     }
 }

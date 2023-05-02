@@ -3,6 +3,9 @@ using UnityEngine;
 public class ObstacleSpawner : MonoBehaviour
 {
     [SerializeField]
+    private bool debug;
+
+    [SerializeField]
     private GameObject[] obstaclePrefabs;
 
     [SerializeField]
@@ -38,6 +41,15 @@ public class ObstacleSpawner : MonoBehaviour
 
     private void SetBounds()
     {
+        if (debug)
+        {
+            maxX = 0;
+            minX = 0;
+            yPos = GameUtils.GetScreenDimensions().y;
+
+            return;
+        }
+
         // Retrieves the screen dimensions from camera to calculate a point in world coordinates matching the top right screen corner
         Vector2 bounds = GameUtils.GetScreenDimensions();
 
@@ -47,6 +59,11 @@ public class ObstacleSpawner : MonoBehaviour
 
         // Always spawn objects from top
         yPos = bounds.y;
+    }
+
+    public void OnGameOver()
+    {
+        CancelInvoke("SpawnObject");
     }
 
     private void SpawnObject()

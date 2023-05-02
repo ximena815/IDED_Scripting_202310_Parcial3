@@ -18,6 +18,20 @@ public abstract class UIManagerBase : MonoBehaviour
     protected abstract PlayerControllerBase PlayerController { get; }
     protected abstract GameControllerBase GameController { get; }
 
+    public void OnGameOver()
+    {
+        enabled = false;
+        gameOverPanel?.SetActive(true);
+    }
+
+    public void UpdateScoreLabel()
+    {
+        if (scoreLabel != null)
+        {
+            scoreLabel.text = PlayerController?.Score.ToString();
+        }
+    }
+
     public void RestartLevel()
     {
         SceneManager.LoadScene(0, LoadSceneMode.Single);
@@ -36,6 +50,7 @@ public abstract class UIManagerBase : MonoBehaviour
         else
         {
             gameOverPanel?.SetActive(false);
+            UpdateScoreLabel();
             enabled = true;
             EnableIcon(0);
         }
@@ -44,22 +59,11 @@ public abstract class UIManagerBase : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (scoreLabel != null)
-        {
-            scoreLabel.text = PlayerController?.Score.ToString();
-        }
-
         if (timeLabel != null)
         {
             float currentTime = GameController.RemainingPlayTime + 1;
             timeLabel.text = currentTime.ToTimeFormatString();
         }
-    }
-
-    public void OnGameOver()
-    {
-        enabled = false;
-        gameOverPanel?.SetActive(true);
     }
 
     private void EnableIcon(int iconIndex)

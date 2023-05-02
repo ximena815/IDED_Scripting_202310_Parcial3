@@ -1,3 +1,3 @@
-public class ObstacleLow : ObstacleBase
+public sealed class ObstacleLow : Obstacle
 {
 }
