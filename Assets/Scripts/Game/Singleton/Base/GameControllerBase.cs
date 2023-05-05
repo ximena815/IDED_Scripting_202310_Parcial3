@@ -10,7 +10,7 @@ public abstract class GameControllerBase : MonoBehaviour
     protected abstract PlayerControllerBase PlayerController { get; }
     protected abstract UIManagerBase UiManager { get; }
 
-    protected abstract ObstacleSpawner Spawner { get; }
+    protected abstract ObstacleSpawnerBase Spawner { get; }
 
     protected abstract void OnScoreChanged(int scoreAdd);
 
