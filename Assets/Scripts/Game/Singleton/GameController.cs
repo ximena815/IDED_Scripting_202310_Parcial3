@@ -15,7 +15,7 @@ public sealed class GameController : GameControllerBase
 
     protected override UIManagerBase UiManager => uiManager;
 
-    protected override ObstacleSpawner Spawner => obstacleSpawner;
+    protected override ObstacleSpawnerBase Spawner => obstacleSpawner;
 
     protected override void OnScoreChanged(int scoreAdd)
     {
