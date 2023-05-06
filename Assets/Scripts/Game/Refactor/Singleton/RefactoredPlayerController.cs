@@ -1,5 +1,7 @@
 public class RefactoredPlayerController : PlayerControllerBase
 {
+    protected override bool NoSelectedBullet => throw new System.NotImplementedException();
+
     protected override void Shoot()
     {
         //base.Shoot();

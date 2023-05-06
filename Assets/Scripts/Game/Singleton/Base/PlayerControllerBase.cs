@@ -18,8 +18,6 @@ public abstract class PlayerControllerBase : MonoBehaviour
     [Range(0F, 500F)]
     protected float shootForce = 250F;
 
-    protected Rigidbody selectedBullet;
-
     private float
         hVal = 0F,
         minXPos,
@@ -30,6 +28,8 @@ public abstract class PlayerControllerBase : MonoBehaviour
     private Vector2 moveDirection;
 
     public uint Score { get; protected set; }
+
+    protected abstract bool NoSelectedBullet { get; }
 
     protected abstract void Shoot();
 
@@ -43,7 +43,7 @@ public abstract class PlayerControllerBase : MonoBehaviour
         enabled = false;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         float playerWidth = GetComponent<Collider>().bounds.size.x;
 
@@ -71,7 +71,7 @@ public abstract class PlayerControllerBase : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             //Fire
-            if (selectedBullet == null)
+            if (NoSelectedBullet)
             {
                 SelectBullet(0);
             }

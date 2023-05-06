@@ -1,4 +1,4 @@
-public class Obstacle : ObstacleBase
+public abstract class Obstacle : ObstacleBase
 {
     private static GameController gameController;
 
@@ -15,8 +15,13 @@ public class Obstacle : ObstacleBase
         }
     }
 
-    protected override void NotifyObstacleDestroyed()
+    protected override void DestroyObstacle(bool notify = false)
     {
-        GameController?.SendMessage("OnObstacleDestroyed", HP);
+        if (notify)
+        {
+            GameController?.SendMessage("OnObstacleDestroyed", HP);
+        }
+
+        Destroy(gameObject);
     }
 }

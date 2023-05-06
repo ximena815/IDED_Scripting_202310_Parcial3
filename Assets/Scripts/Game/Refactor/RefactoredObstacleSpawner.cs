@@ -3,13 +3,13 @@ using UnityEngine;
 public class RefactoredObstacleSpawner : ObstacleSpawnerBase
 {
     [SerializeField]
-    private IPool obstacleLowPool;
+    private PoolBase obstacleLowPool;
 
     [SerializeField]
-    private IPool obstacleMidPool;
+    private PoolBase obstacleMidPool;
 
     [SerializeField]
-    private IPool obstacleHardPool;
+    private PoolBase obstacleHardPool;
 
     protected override void SpawnObject()
     {

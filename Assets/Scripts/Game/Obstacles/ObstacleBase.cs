@@ -15,20 +15,20 @@ public abstract class ObstacleBase : MonoBehaviour
 
     protected int HP { get => hp; }
 
-    private void Start()
+    protected virtual void Start()
     {
         remainingHP = hp;
     }
 
     protected abstract GameControllerBase GameController { get; }
 
-    protected abstract void NotifyObstacleDestroyed();
+    protected abstract void DestroyObstacle(bool notify = false);
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer.Equals(LayerMask.NameToLayer(GameUtils.KILLVOLUME_LAYER_NAME)))
         {
-            Destroy(gameObject);
+            DestroyObstacle(false);
         }
         else
         {
@@ -50,8 +50,7 @@ public abstract class ObstacleBase : MonoBehaviour
 
             if (remainingHP < 1)
             {
-                NotifyObstacleDestroyed();
-                Destroy(gameObject);
+                DestroyObstacle(true);
             }
         }
     }

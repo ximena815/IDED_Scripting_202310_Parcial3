@@ -38,7 +38,7 @@ public abstract class UIManagerBase : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    private void Start()
+    protected virtual void Start()
     {
         if (PlayerController == null)
         {
@@ -67,7 +67,7 @@ public abstract class UIManagerBase : MonoBehaviour
         }
     }
 
-    private void EnableIcon(int iconIndex)
+    protected void EnableIcon(int iconIndex)
     {
         switch (iconIndex)
         {

@@ -2,6 +2,26 @@ using UnityEngine;
 
 public sealed class ObstacleSpawner : ObstacleSpawnerBase
 {
+    [SerializeField]
+    private GameObject[] obstaclePrefabs;
+
+    protected GameObject[] ObstaclePrefabs { get => obstaclePrefabs; }
+
+    protected int ObjectIndex
+    {
+        get
+        {
+            int result = 0;
+
+            if (obstaclePrefabs.Length > 1)
+            {
+                result = Random.Range(result, obstaclePrefabs.Length);
+            }
+
+            return result;
+        }
+    }
+
     protected override void SpawnObject()
     {
         Instantiate(

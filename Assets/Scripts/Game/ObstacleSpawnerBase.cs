@@ -6,32 +6,12 @@ public abstract class ObstacleSpawnerBase : MonoBehaviour
     private bool debug;
 
     [SerializeField]
-    private GameObject[] obstaclePrefabs;
-
-    [SerializeField]
     [Range(0.5F, 2F)]
     private float instanceRate = 1.25F;
-
-    protected int ObjectIndex
-    {
-        get
-        {
-            int result = 0;
-
-            if (obstaclePrefabs.Length > 1)
-            {
-                result = Random.Range(result, obstaclePrefabs.Length);
-            }
-
-            return result;
-        }
-    }
 
     protected float MinX { get; private set; }
     protected float MaxX { get; private set; }
     protected float YPos { get; private set; }
-
-    protected GameObject[] ObstaclePrefabs { get => obstaclePrefabs; }
 
     protected abstract void SpawnObject();
 
@@ -41,7 +21,7 @@ public abstract class ObstacleSpawnerBase : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    private void Start()
+    protected virtual void Start()
     {
         SetMovementBounds();
         InvokeRepeating("SpawnObject", 1F, instanceRate);
