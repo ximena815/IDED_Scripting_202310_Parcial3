@@ -15,8 +15,8 @@ public class RefactoredObstacleSpawner : ObstacleSpawnerBase
 
     private void Awake()
     {
-        if (Instance != null) Destroy(this);
-        else { Instance = this; DontDestroyOnLoad(this); }
+        if (Instance == null) { Instance = this; }
+        else { Destroy(this); }
     }
     
     protected override void SpawnObject()

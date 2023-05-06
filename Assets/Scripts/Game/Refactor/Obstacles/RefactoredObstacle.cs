@@ -4,6 +4,7 @@ public abstract class RefactoredObstacle : ObstacleBase
 
     protected override void DestroyObstacle(bool notify = false)
     {
-        throw new System.NotImplementedException();
+        RefactoredGameController.Instance.DestroyObstacle(HP);
+        GetComponent<PoolableObject>().RecycleObject();
     }
 }

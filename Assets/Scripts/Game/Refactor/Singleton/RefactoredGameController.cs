@@ -6,14 +6,19 @@ public sealed class RefactoredGameController : GameControllerBase
     protected override PlayerControllerBase PlayerController => RefactoredPlayerController.Instance;
     protected override UIManagerBase UiManager => RefactoredUIManager.Instance;
     protected override ObstacleSpawnerBase Spawner => RefactoredObstacleSpawner.Instance;
-
+    
     public static event Action<int> UpdateScore;
     public static event Action GameOver;
 
     private void Awake()
     {
-        if (Instance != null) Destroy(this);
-        else { Instance = this; DontDestroyOnLoad(this); }
+        if (Instance == null) { Instance = this; }
+        else { Destroy(this); }
+    }
+
+    public void DestroyObstacle(int hp)
+    {
+        OnObstacleDestroyed(hp);
     }
     
     protected override void OnScoreChanged(int hp)
