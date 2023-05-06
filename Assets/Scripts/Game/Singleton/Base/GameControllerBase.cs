@@ -12,12 +12,7 @@ public abstract class GameControllerBase : MonoBehaviour
 
     protected abstract ObstacleSpawnerBase Spawner { get; }
 
-    protected abstract void OnScoreChanged(int scoreAdd);
-
-    private void OnObstacleDestroyed(int hp)
-    {
-        OnScoreChanged(hp);
-    }
+    protected abstract void OnObstacleDestroyed(int hp);
 
     protected virtual void SetGameOver()
     {

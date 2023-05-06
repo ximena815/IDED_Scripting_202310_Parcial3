@@ -17,7 +17,7 @@ public sealed class GameController : GameControllerBase
 
     protected override ObstacleSpawnerBase Spawner => obstacleSpawner;
 
-    protected override void OnScoreChanged(int scoreAdd)
+    protected override void OnObstacleDestroyed(int scoreAdd)
     {
         PlayerController?.SendMessage("UpdateScore", scoreAdd);
         UiManager?.SendMessage("UpdateScoreLabel");
