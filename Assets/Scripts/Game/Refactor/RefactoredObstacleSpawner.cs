@@ -21,6 +21,22 @@ public class RefactoredObstacleSpawner : ObstacleSpawnerBase
     
     protected override void SpawnObject()
     {
-        throw new System.NotImplementedException();
+        GameObject obstacle;
+        switch (Random.Range(0, 3))
+        {
+            case 0:
+                obstacle = obstacleLowPool.RetrieveInstance();
+                break;
+            case 1:
+                obstacle = obstacleMidPool.RetrieveInstance();
+                break;
+            case 2:
+                obstacle = obstacleHardPool.RetrieveInstance();
+                break;
+            default:
+                obstacle = obstacleLowPool.RetrieveInstance();
+                break;
+        }
+        obstacle.transform.position = new Vector2(Random.Range(MinX, MaxX), YPos);
     }
 }

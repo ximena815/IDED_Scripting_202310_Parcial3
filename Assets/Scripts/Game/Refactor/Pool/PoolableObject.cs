@@ -9,12 +9,12 @@ public class PoolableObject : MonoBehaviour
 
     public void RecycleObject()
     {
-        OnObjectToRecycle(gameObject);
+        if (OnObjectToRecycle != null && gameObject != null) OnObjectToRecycle(gameObject);
     }
     
     public IEnumerator Cycle(float lifeTime)
     {
         yield return new WaitForSeconds(lifeTime);
-        RecycleObject();
+        if (OnObjectToRecycle != null && gameObject != null) RecycleObject();
     }
 }

@@ -19,9 +19,9 @@ public abstract class PoolBase : MonoBehaviour, IPool
 
     public void RecycleInstance(GameObject instance)
     {
+        instance.GetComponent<PoolableObject>().OnObjectToRecycle -= RecycleInstance;
         instance.SetActive(false);
         instances.Enqueue(instance);
-        instance.GetComponent<PoolableObject>().OnObjectToRecycle -= RecycleInstance;
     }
 
     public GameObject RetrieveInstance()
@@ -30,9 +30,9 @@ public abstract class PoolBase : MonoBehaviour, IPool
         {
             GameObject poolableObject = Instantiate(basePrefab, transform.position, Quaternion.identity);
             poolableObject.SetActive(false);
+            poolableObject.transform.parent = transform.parent;
             instances.Enqueue(poolableObject);
         }
-        
         GameObject pooledObject = instances.Dequeue();
         pooledObject.SetActive(true);
         pooledObject.GetComponent<PoolableObject>().OnObjectToRecycle += RecycleInstance;

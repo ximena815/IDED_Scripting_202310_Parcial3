@@ -4,9 +4,9 @@ using UnityEngine;
 public class RefactoredPlayerController : PlayerControllerBase
 {
     public static RefactoredPlayerController Instance;
-    protected override bool NoSelectedBullet => throw new System.NotImplementedException();
+    protected override bool NoSelectedBullet => currentBulletPool == null;
 
-    private PoolBase currentBulletPool;
+    [SerializeField] private PoolBase currentBulletPool;
 
     [SerializeField] private float bulletLifeTime = 2f;
 
