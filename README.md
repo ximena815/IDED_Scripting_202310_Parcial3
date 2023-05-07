@@ -2,8 +2,8 @@
 ----
 **Integrantes:**
 + Ximena Alejandra Duarte Chamorro
-+ Pan
-+ Queso
++ Juan Jose Echeverri Velasquez
++ Daniel Rua Montaño
 
 Cambios Principales
 ----
