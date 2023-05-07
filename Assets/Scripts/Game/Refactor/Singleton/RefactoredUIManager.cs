@@ -1,6 +1,23 @@
+using System;
+
 public class RefactoredUIManager : UIManagerBase
 {
-    protected override PlayerControllerBase PlayerController => throw new System.NotImplementedException();
+    public static RefactoredUIManager Instance;
+    protected override PlayerControllerBase PlayerController => RefactoredPlayerController.Instance;
+    protected override GameControllerBase GameController => RefactoredGameController.Instance;
 
-    protected override GameControllerBase GameController => throw new System.NotImplementedException();
+    private void Awake()
+    {
+        if (Instance == null) { Instance = this; }
+        else { Destroy(this); }
+    }
+    
+    protected override void Start()
+    {
+        base.Start();
+
+        RefactoredGameController.UpdateUI += UpdateScoreLabel;
+        RefactoredGameController.GameOver += OnGameOver;
+        RefactoredPlayerController.ChangeIcon += EnableIcon;
+    }
 }
